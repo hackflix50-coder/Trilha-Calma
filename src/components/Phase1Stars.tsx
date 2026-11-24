@@ -154,27 +154,27 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
             </h2>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
-            <div className="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-center">
-              <div className="text-[11px] font-medium text-amber-800">Progresso</div>
-              <div className="text-lg sm:text-xl font-bold text-slate-900 tabular-nums">
+          <div className="flex items-stretch gap-1.5 sm:gap-3 w-full sm:w-auto shrink-0">
+            <div className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-center flex flex-col justify-center shrink-0 min-h-[44px] sm:min-h-[48px]">
+              <div className="text-[10px] sm:text-[11px] leading-tight font-medium text-amber-800">Progresso</div>
+              <div className="text-sm sm:text-xl leading-tight font-bold text-slate-900 tabular-nums">
                 {foundIds.length} / {totalTargets}
               </div>
             </div>
             <button
               type="button"
               onClick={() => setDemoMode('manual')}
-              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-xs sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
-              <PlayCircle className="w-5 h-5" />
+              <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
               Ver exemplo
             </button>
             <button
               type="button"
               onClick={handleResetRound}
-              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-xs sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4 shrink-0" />
               Reiniciar
             </button>
           </div>
