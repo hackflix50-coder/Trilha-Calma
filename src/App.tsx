@@ -127,7 +127,7 @@ export default function App() {
       </header>
 
       {/* Área Principal */}
-      <main className="flex-1 w-full max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-8 lg:py-10 flex flex-col justify-center">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-3 sm:px-6 pt-3 pb-16 sm:py-8 lg:py-10 flex flex-col justify-start md:justify-center">
         {activePhase === 'menu' && (
           <StartMenu
             soundEnabled={soundEnabled}

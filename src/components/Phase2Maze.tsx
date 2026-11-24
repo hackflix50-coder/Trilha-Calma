@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, CheckCircle2, Flag, PlayCircle, RotateCcw } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Flag, PlayCircle, RotateCcw } from 'lucide-react';
 import { MAZE_LEVELS } from '../data/levels';
 import { playSoftStep, playSoftSuccess } from '../utils/sound';
 import { VisualDemoModal } from './VisualDemoModal';
@@ -324,7 +324,7 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
               {level.title}
             </h2>
             <p className="text-base sm:text-lg text-slate-600 mt-1">
-              {level.hint}
+              Siga o caminho azul
             </p>
           </div>
 
@@ -374,9 +374,9 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
           })}
         </div>
 
-        {/* Área do Labirinto: coluna no celular, lado a lado com controles em telas maiores */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-6 lg:gap-10">
-          <div className="relative w-full max-w-[380px] sm:max-w-[430px] mx-auto lg:mx-0">
+        {/* Área do Labirinto centralizada */}
+        <div className="flex flex-col items-center">
+          <div className="relative w-full max-w-[380px] sm:max-w-[440px] mx-auto">
             <div
               ref={boardRef}
               onPointerDown={handlePointerDown}
@@ -462,85 +462,52 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
               </div>
             </div>
 
-            {/* Overlay suave de vitória APÓS o snap no centro de FIM */}
+            {/* Overlay suave de vitória APÓS o snap no centro de FIM (visível no celular sem rolar) */}
             {winStage === 'won' && (
               <div
-                role="status"
-                aria-live="polite"
-                className="mt-6 p-6 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4"
+                className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-[2px]"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="phase2-win-title"
               >
-                <div className="flex items-center gap-3 text-center sm:text-left">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-7 h-7" />
+                <div className="w-full max-w-md rounded-3xl bg-white border-2 border-emerald-300 p-6 sm:p-8 shadow-xl text-center flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                    <CheckCircle2 className="w-9 h-9" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-emerald-950">
-                      {isLastLevel ? 'Parabéns! Todos os 10 labirintos concluídos!' : 'Muito bem! Você chegou ao FIM!'}
-                    </h3>
-                    <p className="text-base text-emerald-800">
-                      {isLastLevel
-                        ? 'Você está pronto para a Fase 3: Copie na Malha.'
-                        : `Siga para o nível ${levelIndex + 2} de ${MAZE_LEVELS.length}.`}
-                    </p>
+                  <p className="text-sm font-bold text-emerald-700 mb-1">
+                    Nível {levelIndex + 1} de {MAZE_LEVELS.length}
+                  </p>
+                  <h3 id="phase2-win-title" className="text-2xl font-bold text-slate-900">
+                    {isLastLevel ? 'Parabéns! 10 labirintos concluídos!' : 'Muito bem! Você chegou ao FIM!'}
+                  </h3>
+                  <p className="text-base text-slate-600 mt-2">
+                    {isLastLevel
+                      ? 'Você está pronto para a Fase 3: Copie na Malha.'
+                      : `Siga para o nível ${levelIndex + 2} de ${MAZE_LEVELS.length}.`}
+                  </p>
+
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
+                    <button
+                      type="button"
+                      onClick={() => resetLevel(levelIndex)}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-base min-h-[52px] flex-1 cursor-pointer"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      Refazer
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextLevel}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg min-h-[52px] flex-1 cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400"
+                    >
+                      {isLastLevel ? 'Ir para Fase 3' : 'Próxima Fase'}
+                      <ArrowRight className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={handleNextLevel}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg transition-colors min-h-[52px] whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400"
-                >
-                  {isLastLevel ? 'Ir para Fase 3' : 'Próxima Fase'}
-                  <ArrowRight className="w-5 h-5" />
-                </button>
               </div>
             )}
           </div>
-
-          {/* Controles alternativos acessíveis (para quem prefere tocar botões em vez de arrastar) */}
-          {winStage === 'playing' && (
-            <div className="flex flex-col items-center gap-2.5 pt-1 lg:pt-0 lg:w-52 shrink-0">
-              <p className="text-sm text-slate-500 text-center">
-                Arraste a bolinha ou use as setas
-              </p>
-              <div className="grid grid-cols-3 gap-2 w-[168px]">
-                <div />
-                <button
-                  type="button"
-                  onClick={() => stepByCell(-1, 0)}
-                  aria-label="Mover para cima"
-                  className="h-12 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 flex items-center justify-center text-slate-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  <ArrowUp className="w-5 h-5" />
-                </button>
-                <div />
-                <button
-                  type="button"
-                  onClick={() => stepByCell(0, -1)}
-                  aria-label="Mover para esquerda"
-                  className="h-12 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 flex items-center justify-center text-slate-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => stepByCell(1, 0)}
-                  aria-label="Mover para baixo"
-                  className="h-12 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 flex items-center justify-center text-slate-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  <ArrowDown className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => stepByCell(0, 1)}
-                  aria-label="Mover para direita"
-                  className="h-12 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 flex items-center justify-center text-slate-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 

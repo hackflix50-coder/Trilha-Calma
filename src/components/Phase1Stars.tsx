@@ -1,5 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { Check, Circle, Hexagon, Moon, PlayCircle, RotateCcw, Sparkles, Square, Star, Triangle, ArrowRight } from 'lucide-react';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  Circle,
+  Hexagon,
+  Moon,
+  PlayCircle,
+  RotateCcw,
+  Sparkles,
+  Square,
+  Star,
+  Triangle,
+} from 'lucide-react';
 import { STAR_ROUNDS } from '../data/levels';
 import { playSoftGentleNudge, playSoftSelect, playSoftSuccess } from '../utils/sound';
 import { VisualDemoModal } from './VisualDemoModal';
@@ -65,6 +78,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
   const [foundIds, setFoundIds] = useState<string[]>([]);
   const [gentleHint, setGentleHint] = useState<string | null>(null);
   const [nudgedId, setNudgedId] = useState<string | null>(null);
+  const [showWinOverlay, setShowWinOverlay] = useState(false);
   const [demoMode, setDemoMode] = useState<'auto' | 'manual' | 'closed'>('auto');
   const handleCloseDemo = useCallback(() => setDemoMode('closed'), []);
 
@@ -72,6 +86,18 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
   const totalTargets = round.items.filter((item) => item.isTarget).length;
   const isRoundComplete = foundIds.length === totalTargets;
   const isLastRound = roundIndex === STAR_ROUNDS.length - 1;
+
+  // Ao encontrar a 10ª estrela, aguarda 350ms para a criança ver o visto verde e abre o cartão centralizado (sem precisar rolar a tela no celular!)
+  useEffect(() => {
+    if (!isRoundComplete) {
+      setShowWinOverlay(false);
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setShowWinOverlay(true);
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [isRoundComplete]);
 
   const handleItemClick = (item: (typeof round.items)[number]) => {
     if (isRoundComplete) return;
@@ -100,6 +126,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
     setFoundIds([]);
     setGentleHint(null);
     setNudgedId(null);
+    setShowWinOverlay(false);
   };
 
   const handleNextRound = () => {
@@ -108,6 +135,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
       setFoundIds([]);
       setGentleHint(null);
       setNudgedId(null);
+      setShowWinOverlay(false);
     } else {
       onGoToNextPhase();
     }
@@ -116,30 +144,27 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
   return (
     <section aria-labelledby="phase1-heading" className="w-full max-w-4xl mx-auto">
       <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 sm:pb-6 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-slate-100">
           <div>
-            <p className="text-sm font-medium text-blue-700 mb-1">
+            <p className="text-sm font-medium text-blue-700 mb-0.5">
               Fase 1 · {round.title}
             </p>
             <h2 id="phase1-heading" className="text-2xl sm:text-3xl font-bold text-slate-900 text-balance">
               Atenção às Estrelas
             </h2>
-            <p className="text-base sm:text-lg text-slate-600 mt-1">
-              {round.instruction}
-            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <div className="text-right mr-1">
-              <div className="text-xs font-medium text-slate-500">Progresso</div>
-              <div className="text-xl font-bold text-slate-900 tabular-nums">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-center">
+              <div className="text-[11px] font-medium text-amber-800">Progresso</div>
+              <div className="text-lg sm:text-xl font-bold text-slate-900 tabular-nums">
                 {foundIds.length} / {totalTargets}
               </div>
             </div>
             <button
               type="button"
               onClick={() => setDemoMode('manual')}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-base transition-colors min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               <PlayCircle className="w-5 h-5" />
               Ver exemplo
@@ -147,7 +172,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
             <button
               type="button"
               onClick={handleResetRound}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-base transition-colors min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               <RotateCcw className="w-4 h-4" />
               Reiniciar
@@ -155,21 +180,40 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
           </div>
         </div>
 
-        {/* Gentle feedback bar — fixed height to prevent layout shift */}
-        <div className="min-h-[44px] flex items-center justify-center my-4" aria-live="polite">
-          {gentleHint ? (
-            <p className="text-base font-medium text-slate-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-center">
+        {/* Barra de feedback suave com altura compacta no celular */}
+        <div className="min-h-[38px] flex items-center justify-center my-3 sm:my-4" aria-live="polite">
+          {isRoundComplete ? (
+            <div className="w-full flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-emerald-50 border border-emerald-300">
+              <span className="inline-flex items-center gap-2 text-base font-bold text-emerald-900">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                {totalTargets} / {totalTargets} estrelas encontradas!
+              </span>
+              <button
+                type="button"
+                onClick={handleNextRound}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm sm:text-base cursor-pointer"
+              >
+                {isLastRound ? 'Próxima Fase' : 'Próxima Rodada'}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          ) : gentleHint ? (
+            <p className="text-sm sm:text-base font-medium text-slate-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-center">
               {gentleHint}
             </p>
-          ) : !isRoundComplete ? (
-            <p className="text-base text-slate-500 text-center">
+          ) : (
+            <p className="text-sm sm:text-base text-slate-500 text-center">
               Encontre todas as {totalTargets} estrelas douradas.
             </p>
-          ) : null}
+          )}
         </div>
 
-        {/* Shape Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 max-w-2xl mx-auto">
+        {/* Grade de Formas (4 colunas no celular para caber inteiro na tela sem rolagem) */}
+        <div
+          className={`grid gap-2.5 sm:gap-4 max-w-2xl mx-auto ${
+            round.items.length > 16 ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4'
+          }`}
+        >
           {round.items.map((item) => {
             const isFound = foundIds.includes(item.id);
             const isNudged = nudgedId === item.id;
@@ -188,7 +232,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
                     ? 'Estrela'
                     : 'Outra forma geométrica'
                 }
-                className={`relative flex items-center justify-center aspect-square min-h-[76px] sm:min-h-[84px] rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
+                className={`relative flex items-center justify-center aspect-square min-h-[62px] sm:min-h-[82px] rounded-xl sm:rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
                   isFound
                     ? 'bg-emerald-50 border-emerald-400 scale-[0.97]'
                     : isNudged
@@ -198,50 +242,67 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
               >
                 <ShapeIcon
                   type={item.type}
-                  className={`w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 transition-transform duration-150 ${
+                  className={`w-8 h-8 sm:w-11 sm:h-11 transition-transform duration-150 ${
                     isFound ? 'text-emerald-600 fill-emerald-300' : style.icon
                   }`}
                 />
                 {isFound && (
-                  <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
-                    <Check className="w-4 h-4" strokeWidth={3} />
+                  <span className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
+                    <Check className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
                   </span>
                 )}
               </button>
             );
           })}
         </div>
+      </div>
 
-        {/* Gentle completion banner */}
-        {isRoundComplete && (
-          <div className="mt-8 p-6 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-emerald-950">
-                  {isLastRound ? 'Muito bem! Você concluiu a Fase 1!' : 'Ótimo trabalho! Rodada concluída!'}
-                </h3>
-                <p className="text-base text-emerald-800">
-                  {isLastRound
-                    ? 'Agora você pode seguir para o Labirinto.'
-                    : 'Pronto para a segunda rodada com mais formas?'}
-                </p>
-              </div>
+      {/* Cartão centralizado de conclusão — 100% visível no celular sem precisar rolar a tela */}
+      {showWinOverlay && (
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-900/35 backdrop-blur-[2px]"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="phase1-win-title"
+        >
+          <div className="w-full max-w-md rounded-3xl bg-white border-2 border-emerald-300 p-6 sm:p-8 shadow-xl text-center flex flex-col items-center">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-4 shadow-sm">
+              <Sparkles className="w-9 h-9" />
             </div>
 
-            <button
-              type="button"
-              onClick={handleNextRound}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg transition-colors min-h-[52px] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400 cursor-pointer"
-            >
-              {isLastRound ? 'Próxima Fase' : 'Próxima Rodada'}
-              <ArrowRight className="w-5 h-5" />
-            </button>
+            <p className="text-base font-bold text-emerald-700 tabular-nums mb-1">
+              {totalTargets} / {totalTargets} estrelas!
+            </p>
+            <h3 id="phase1-win-title" className="text-2xl font-bold text-slate-900">
+              {isLastRound ? 'Muito bem! Fase 1 concluída!' : 'Ótimo trabalho!'}
+            </h3>
+            <p className="text-base text-slate-600 mt-2">
+              {isLastRound
+                ? 'Agora você já pode seguir para a Fase 2: Labirinto.'
+                : 'Pronto para a segunda rodada?'}
+            </p>
+
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
+              <button
+                type="button"
+                onClick={handleResetRound}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-base min-h-[52px] flex-1 cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Refazer
+              </button>
+              <button
+                type="button"
+                onClick={handleNextRound}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg min-h-[52px] flex-1 cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400"
+              >
+                {isLastRound ? 'Próxima Fase' : 'Próxima Rodada'}
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <VisualDemoModal
         phase="stars"
