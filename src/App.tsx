@@ -100,8 +100,9 @@ export default function App() {
             </nav>
           )}
 
-          {/* Zona 3: Instalar App + Controle de Som Suave */}
+          {/* Zona 3: Status Offline discreto + Instalar App + Controle de Som Suave */}
           <div className="flex items-center gap-2 shrink-0 order-2 md:order-3">
+            <OfflineIndicator />
             <PWAInstallButton />
             <button
               type="button"
@@ -153,8 +154,6 @@ export default function App() {
           />
         )}
       </main>
-
-      <OfflineIndicator />
     </div>
   );
 }

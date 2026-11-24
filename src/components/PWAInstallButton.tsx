@@ -28,7 +28,7 @@ export const PWAInstallButton: React.FC = () => {
         className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs sm:text-sm lg:text-base font-semibold shadow-sm transition-all whitespace-nowrap shrink-0 min-h-[44px] sm:min-h-[48px] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
       >
         <Download className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-        <span>Instalar App</span>
+        <span>Modo Offline</span>
       </button>
 
       {showGuide && (
@@ -49,7 +49,7 @@ export const PWAInstallButton: React.FC = () => {
                   <Smartphone className="w-5 h-5" />
                 </div>
                 <h3 id="pwa-install-guide-title" className="text-xl font-bold text-slate-900">
-                  {isIOS ? 'Instalar no iPhone / iPad' : 'Instalar no Celular'}
+                  {isIOS ? 'Modo Offline no iPhone / iPad' : 'Ativar Modo Offline'}
                 </h3>
               </div>
               <button

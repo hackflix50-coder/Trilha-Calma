@@ -25,10 +25,12 @@ export const OfflineIndicator: React.FC = () => {
     <div
       role="status"
       aria-live="polite"
-      className="fixed bottom-4 left-4 z-40 inline-flex items-center gap-2 rounded-xl bg-slate-800 text-white px-4 py-2.5 text-sm font-medium shadow-lg border border-slate-700"
+      aria-label="Modo offline: pronto para jogar sem internet"
+      title="Modo offline · Pronto para jogar sem internet"
+      className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 text-slate-600 px-2.5 py-1.5 text-xs font-medium border border-slate-200 whitespace-nowrap shrink-0"
     >
-      <WifiOff className="w-4 h-4 text-amber-300 shrink-0" />
-      <span>Modo offline · Pronto para jogar sem internet</span>
+      <WifiOff className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+      <span>Offline</span>
     </div>
   );
 };
