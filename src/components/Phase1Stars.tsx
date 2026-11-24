@@ -180,8 +180,8 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
           </div>
         </div>
 
-        {/* Barra de feedback suave com altura compacta no celular */}
-        <div className="min-h-[34px] flex items-center justify-center my-2 sm:my-3 shrink-0" aria-live="polite">
+        {/* Barra de feedback suave próxima aos blocos */}
+        <div className="min-h-[30px] flex items-center justify-center mt-2 mb-2 sm:mt-2.5 sm:mb-3 shrink-0" aria-live="polite">
           {isRoundComplete ? (
             <div className="w-full flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-emerald-50 border border-emerald-300">
               <span className="inline-flex items-center gap-2 text-base font-bold text-emerald-900">
@@ -198,63 +198,65 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
               </button>
             </div>
           ) : gentleHint ? (
-            <p className="text-sm sm:text-base font-medium text-slate-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 text-center">
+            <p className="text-sm sm:text-base font-medium text-slate-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-1.5 text-center">
               {gentleHint}
             </p>
           ) : (
-            <p className="text-sm sm:text-base text-slate-500 text-center">
-              Encontre todas as {totalTargets} estrelas douradas.
+            <p className="text-sm sm:text-base font-medium text-slate-600 text-center">
+              Encontre as {totalTargets} estrelas douradas.
             </p>
           )}
         </div>
 
-        {/* Grade de Formas centralizada ocupando a tela inteira */}
-        <div className="flex-1 flex items-center justify-center min-h-0">
+        {/* Grade de Formas ampliada ocupando todo o espaço sobressalente */}
+        <div className="flex-1 flex flex-col min-h-0">
           <div
-            className={`grid gap-2.5 sm:gap-4 w-full max-w-3xl mx-auto ${
-              round.items.length > 16 ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4'
+            className={`flex-1 grid gap-2.5 sm:gap-3.5 lg:gap-4 w-full max-w-4xl mx-auto ${
+              round.items.length > 16
+                ? 'grid-cols-4 grid-rows-5 sm:grid-cols-5 sm:grid-rows-4'
+                : 'grid-cols-4 grid-rows-4'
             }`}
           >
-          {round.items.map((item) => {
-            const isFound = foundIds.includes(item.id);
-            const isNudged = nudgedId === item.id;
-            const style = VARIANT_CLASSES[item.variant];
+            {round.items.map((item) => {
+              const isFound = foundIds.includes(item.id);
+              const isNudged = nudgedId === item.id;
+              const style = VARIANT_CLASSES[item.variant];
 
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => handleItemClick(item)}
-                disabled={isFound}
-                aria-label={
-                  isFound
-                    ? 'Estrela encontrada'
-                    : item.type === 'star'
-                    ? 'Estrela'
-                    : 'Outra forma geométrica'
-                }
-                className={`relative flex items-center justify-center aspect-square min-h-[62px] sm:min-h-[82px] rounded-xl sm:rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
-                  isFound
-                    ? 'bg-emerald-50 border-emerald-400 scale-[0.97]'
-                    : isNudged
-                    ? 'bg-slate-100 border-slate-300 opacity-60 scale-95'
-                    : `${style.bg} ${style.border} hover:scale-[1.03] active:scale-95 cursor-pointer`
-                }`}
-              >
-                <ShapeIcon
-                  type={item.type}
-                  className={`w-8 h-8 sm:w-11 sm:h-11 transition-transform duration-150 ${
-                    isFound ? 'text-emerald-600 fill-emerald-300' : style.icon
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => handleItemClick(item)}
+                  disabled={isFound}
+                  aria-label={
+                    isFound
+                      ? 'Estrela encontrada'
+                      : item.type === 'star'
+                      ? 'Estrela'
+                      : 'Outra forma geométrica'
+                  }
+                  className={`relative flex items-center justify-center w-full h-full min-h-[68px] sm:min-h-[90px] rounded-xl sm:rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
+                    isFound
+                      ? 'bg-emerald-50 border-emerald-400 scale-[0.98]'
+                      : isNudged
+                      ? 'bg-slate-100 border-slate-300 opacity-60 scale-95'
+                      : `${style.bg} ${style.border} hover:scale-[1.02] active:scale-95 cursor-pointer`
                   }`}
-                />
-                {isFound && (
-                  <span className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
-                    <Check className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
-                  </span>
-                )}
-              </button>
-            );
-          })}
+                >
+                  <ShapeIcon
+                    type={item.type}
+                    className={`w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 transition-transform duration-150 ${
+                      isFound ? 'text-emerald-600 fill-emerald-300' : style.icon
+                    }`}
+                  />
+                  {isFound && (
+                    <span className="absolute top-1.5 right-1.5 sm:top-2.5 sm:right-2.5 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
