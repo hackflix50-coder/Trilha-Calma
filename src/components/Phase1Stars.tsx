@@ -208,10 +208,10 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
           )}
         </div>
 
-        {/* Grade de Formas ampliada ocupando todo o espaço sobressalente */}
-        <div className="flex-1 flex flex-col min-h-0">
+        {/* Grade de Formas ampliada e equilibrada, mantendo margem no rodapé */}
+        <div className="flex-1 flex flex-col justify-start min-h-0 pb-2 sm:pb-3">
           <div
-            className={`flex-1 grid gap-2.5 sm:gap-3.5 lg:gap-4 w-full max-w-4xl mx-auto ${
+            className={`flex-1 max-h-[56dvh] sm:max-h-[62dvh] grid gap-2 sm:gap-3 lg:gap-3.5 w-full max-w-3xl mx-auto ${
               round.items.length > 16
                 ? 'grid-cols-4 grid-rows-5 sm:grid-cols-5 sm:grid-rows-4'
                 : 'grid-cols-4 grid-rows-4'
@@ -235,7 +235,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
                       ? 'Estrela'
                       : 'Outra forma geométrica'
                   }
-                  className={`relative flex items-center justify-center w-full h-full min-h-[68px] sm:min-h-[90px] rounded-xl sm:rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
+                  className={`relative flex items-center justify-center w-full h-full min-h-[56px] sm:min-h-[76px] rounded-xl sm:rounded-2xl border-2 transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 ${style.ring} ${
                     isFound
                       ? 'bg-emerald-50 border-emerald-400 scale-[0.98]'
                       : isNudged
@@ -245,13 +245,13 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
                 >
                   <ShapeIcon
                     type={item.type}
-                    className={`w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 transition-transform duration-150 ${
+                    className={`w-9 h-9 sm:w-12 sm:h-12 lg:w-14 lg:h-14 transition-transform duration-150 ${
                       isFound ? 'text-emerald-600 fill-emerald-300' : style.icon
                     }`}
                   />
                   {isFound && (
-                    <span className="absolute top-1.5 right-1.5 sm:top-2.5 sm:right-2.5 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
-                      <Check className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
+                    <span className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
+                      <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5" strokeWidth={3} />
                     </span>
                   )}
                 </button>

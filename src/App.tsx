@@ -226,11 +226,11 @@ export default function App() {
         </div>
       </header>
 
-      {/* Área Principal: centralizada no Menu; tela inteira fluida durante os jogos */}
+      {/* Área Principal: centralizada no Menu; tela inteira fluida com margem inferior segura durante os jogos */}
       <main
         className={
           isPlaying
-            ? 'flex-1 w-full px-2 sm:px-4 lg:px-6 py-2 sm:py-3 flex flex-col'
+            ? 'flex-1 w-full px-2 sm:px-4 lg:px-6 pt-2 pb-10 sm:pt-3 sm:pb-9 flex flex-col'
             : 'flex-1 w-full max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-8 lg:py-10 flex flex-col justify-center'
         }
       >

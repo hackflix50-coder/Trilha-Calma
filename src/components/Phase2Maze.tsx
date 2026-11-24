@@ -376,7 +376,7 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
 
         {/* Área do Labirinto centralizada e ampliada na tela inteira */}
         <div className="flex-1 flex flex-col items-center justify-center min-h-0">
-          <div className="relative w-full max-w-[min(92vw,54dvh)] sm:max-w-[min(80vw,58dvh)] lg:max-w-[min(70vw,62dvh)] mx-auto">
+          <div className="relative w-full max-w-[min(90vw,50dvh)] sm:max-w-[min(78vw,54dvh)] lg:max-w-[min(68vw,58dvh)] mx-auto">
             <div
               ref={boardRef}
               onPointerDown={handlePointerDown}

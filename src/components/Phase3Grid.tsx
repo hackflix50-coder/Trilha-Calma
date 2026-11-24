@@ -374,7 +374,7 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 lg:gap-8 items-center content-center min-h-0">
           {/* Lado Esquerdo: Modelo de Referência */}
           <div className="flex flex-col items-center">
-            <div className="w-full max-w-[min(56vw,25dvh)] sm:max-w-[min(46vw,26dvh)] md:max-w-[min(42vw,58dvh)] aspect-square rounded-2xl bg-[#FAF9F6] border-2 border-slate-200 p-1.5 sm:p-2">
+            <div className="w-full max-w-[min(54vw,24dvh)] sm:max-w-[min(44vw,25dvh)] md:max-w-[min(40vw,54dvh)] aspect-square rounded-2xl bg-[#FAF9F6] border-2 border-slate-200 p-1.5 sm:p-2">
               <svg
                 viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
                 className="w-full h-full"
@@ -432,7 +432,7 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
           {/* Lado Direito: Sua Malha (Desenho Interativo) */}
           <div className="flex flex-col items-center">
             <div
-              className={`w-full max-w-[min(90vw,42dvh)] sm:max-w-[min(82vw,44dvh)] md:max-w-[min(42vw,58dvh)] aspect-square rounded-2xl border-2 p-1.5 sm:p-2 transition-colors ${
+              className={`w-full max-w-[min(86vw,39dvh)] sm:max-w-[min(80vw,41dvh)] md:max-w-[min(40vw,54dvh)] aspect-square rounded-2xl border-2 p-1.5 sm:p-2 transition-colors ${
                 isLevelComplete
                   ? 'bg-emerald-50/60 border-emerald-400'
                   : 'bg-white border-blue-200 shadow-inner'
