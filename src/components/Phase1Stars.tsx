@@ -142,14 +142,14 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
   };
 
   return (
-    <section aria-labelledby="phase1-heading" className="w-full max-w-4xl mx-auto">
-      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-slate-100">
+    <section aria-labelledby="phase1-heading" className="w-full flex-1 flex flex-col max-w-6xl mx-auto">
+      <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-2xl p-3 sm:p-5 lg:p-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-100 shrink-0">
           <div>
             <p className="text-sm font-medium text-blue-700 mb-0.5">
               Fase 1 · {round.title}
             </p>
-            <h2 id="phase1-heading" className="text-2xl sm:text-3xl font-bold text-slate-900 text-balance">
+            <h2 id="phase1-heading" className="text-xl sm:text-3xl font-bold text-slate-900 text-balance">
               Atenção às Estrelas
             </h2>
           </div>
@@ -181,7 +181,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
         </div>
 
         {/* Barra de feedback suave com altura compacta no celular */}
-        <div className="min-h-[38px] flex items-center justify-center my-3 sm:my-4" aria-live="polite">
+        <div className="min-h-[34px] flex items-center justify-center my-2 sm:my-3 shrink-0" aria-live="polite">
           {isRoundComplete ? (
             <div className="w-full flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-emerald-50 border border-emerald-300">
               <span className="inline-flex items-center gap-2 text-base font-bold text-emerald-900">
@@ -208,12 +208,13 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
           )}
         </div>
 
-        {/* Grade de Formas (4 colunas no celular para caber inteiro na tela sem rolagem) */}
-        <div
-          className={`grid gap-2.5 sm:gap-4 max-w-2xl mx-auto ${
-            round.items.length > 16 ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4'
-          }`}
-        >
+        {/* Grade de Formas centralizada ocupando a tela inteira */}
+        <div className="flex-1 flex items-center justify-center min-h-0">
+          <div
+            className={`grid gap-2.5 sm:gap-4 w-full max-w-3xl mx-auto ${
+              round.items.length > 16 ? 'grid-cols-4 sm:grid-cols-5' : 'grid-cols-4'
+            }`}
+          >
           {round.items.map((item) => {
             const isFound = foundIds.includes(item.id);
             const isNudged = nudgedId === item.id;
@@ -254,6 +255,7 @@ export const Phase1Stars: React.FC<Phase1StarsProps> = ({ soundEnabled, onGoToNe
               </button>
             );
           })}
+          </div>
         </div>
       </div>
 

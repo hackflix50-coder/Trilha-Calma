@@ -312,44 +312,44 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
   const isLastLevel = levelIndex === MAZE_LEVELS.length - 1;
 
   return (
-    <section aria-labelledby="phase2-heading" className="w-full max-w-4xl mx-auto">
-      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
+    <section aria-labelledby="phase2-heading" className="w-full flex-1 flex flex-col max-w-6xl mx-auto">
+      <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-2xl p-3 sm:p-5 lg:p-6 shadow-sm">
         {/* Header do Nível */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 sm:pb-6 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-100 shrink-0">
           <div>
-            <p className="text-sm font-medium text-blue-700 mb-1">
+            <p className="text-sm font-medium text-blue-700 mb-0.5">
               Fase 2 · Labirinto · Nível {levelIndex + 1} de {MAZE_LEVELS.length}
             </p>
-            <h2 id="phase2-heading" className="text-2xl sm:text-3xl font-bold text-slate-900 text-balance">
+            <h2 id="phase2-heading" className="text-xl sm:text-3xl font-bold text-slate-900 text-balance">
               {level.title}
             </h2>
-            <p className="text-base sm:text-lg text-slate-600 mt-1">
+            <p className="text-sm sm:text-base text-slate-600 mt-0.5">
               Siga o caminho azul
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto shrink-0">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2 sm:gap-3 w-full sm:w-auto shrink-0">
             <button
               type="button"
               onClick={() => setDemoMode('manual')}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-base transition-colors min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
-              <PlayCircle className="w-5 h-5" />
+              <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
               Ver exemplo
             </button>
             <button
               type="button"
               onClick={() => resetLevel(levelIndex)}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-base transition-colors min-h-[48px] whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-sm sm:text-base transition-colors min-h-[44px] sm:min-h-[48px] whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4 shrink-0" />
               Reiniciar Nível
             </button>
           </div>
         </div>
 
         {/* Seletor de 10 níveis */}
-        <div className="my-4 sm:my-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2" role="navigation" aria-label="Níveis do labirinto">
+        <div className="my-2.5 sm:my-4 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 shrink-0" role="navigation" aria-label="Níveis do labirinto">
           {MAZE_LEVELS.map((lvl, idx) => {
             const isActive = idx === levelIndex;
             const isDone = completedLevels.includes(lvl.id);
@@ -360,7 +360,7 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
                 onClick={() => handleSelectLevel(idx)}
                 aria-label={`Nível ${idx + 1}${isDone ? ' concluído' : ''}`}
                 aria-current={isActive ? 'step' : undefined}
-                className={`min-w-[40px] sm:min-w-[44px] h-10 sm:h-11 px-2.5 sm:px-3 rounded-xl font-bold text-sm sm:text-base tabular-nums transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                className={`min-w-[40px] sm:min-w-[44px] h-9 sm:h-11 px-2.5 sm:px-3 rounded-xl font-bold text-sm sm:text-base tabular-nums transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-sm'
                     : isDone
@@ -374,9 +374,9 @@ export const Phase2Maze: React.FC<Phase2MazeProps> = ({ soundEnabled, onGoToNext
           })}
         </div>
 
-        {/* Área do Labirinto centralizada */}
-        <div className="flex flex-col items-center">
-          <div className="relative w-full max-w-[380px] sm:max-w-[440px] mx-auto">
+        {/* Área do Labirinto centralizada e ampliada na tela inteira */}
+        <div className="flex-1 flex flex-col items-center justify-center min-h-0">
+          <div className="relative w-full max-w-[min(92vw,54dvh)] sm:max-w-[min(80vw,58dvh)] lg:max-w-[min(70vw,62dvh)] mx-auto">
             <div
               ref={boardRef}
               onPointerDown={handlePointerDown}

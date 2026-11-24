@@ -309,12 +309,12 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
   }, [gridSize]);
 
   return (
-    <section aria-labelledby="phase3-heading" className="w-full max-w-5xl mx-auto">
-      <div className="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-6 lg:p-8 shadow-sm">
+    <section aria-labelledby="phase3-heading" className="w-full flex-1 flex flex-col max-w-6xl mx-auto">
+      <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-2xl p-3 sm:p-5 lg:p-6 shadow-sm">
         {/* Cabeçalho */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-3.5 sm:pb-5 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 pb-2.5 sm:pb-4 border-b border-slate-100 shrink-0">
           <div>
-            <p className="text-sm font-medium text-blue-700 mb-0.5 sm:mb-1">
+            <p className="text-sm font-medium text-blue-700 mb-0.5">
               Fase 3 · Copie na Malha · Nível {levelIndex + 1} de {GRID_LEVELS.length}
             </p>
             <h2 id="phase3-heading" className="text-xl sm:text-3xl font-bold text-slate-900 text-balance">
@@ -342,7 +342,7 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
 
         {/* Seletor de 10 níveis numerados */}
         <div
-          className="my-3 sm:my-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2"
+          className="my-2 sm:my-3.5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 shrink-0"
           role="navigation"
           aria-label="Níveis da malha"
         >
@@ -356,7 +356,7 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
                 onClick={() => handleSelectLevel(idx)}
                 aria-label={`Nível ${idx + 1}: ${lvl.name}${isDone ? ' concluído' : ''}`}
                 aria-current={isActive ? 'step' : undefined}
-                className={`min-w-[40px] sm:min-w-[44px] h-10 sm:h-11 px-2.5 sm:px-3 rounded-xl font-bold text-sm sm:text-base tabular-nums transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                className={`min-w-[40px] sm:min-w-[44px] h-9 sm:h-11 px-2.5 sm:px-3 rounded-xl font-bold text-sm sm:text-base tabular-nums transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-sm'
                     : isDone
@@ -370,11 +370,11 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
           })}
         </div>
 
-        {/* Malha Modelo + Malha Interativa sem textos intermediários para manter a área de desenho livre no celular */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 lg:gap-8 items-start">
+        {/* Malha Modelo + Malha Interativa ocupando a tela inteira sem textos intermediários */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 lg:gap-8 items-center content-center min-h-0">
           {/* Lado Esquerdo: Modelo de Referência */}
           <div className="flex flex-col items-center">
-            <div className="w-full max-w-[200px] sm:max-w-[260px] md:max-w-[360px] aspect-square rounded-2xl bg-[#FAF9F6] border-2 border-slate-200 p-1.5 sm:p-2">
+            <div className="w-full max-w-[min(56vw,25dvh)] sm:max-w-[min(46vw,26dvh)] md:max-w-[min(42vw,58dvh)] aspect-square rounded-2xl bg-[#FAF9F6] border-2 border-slate-200 p-1.5 sm:p-2">
               <svg
                 viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
                 className="w-full h-full"
@@ -432,7 +432,7 @@ export const Phase3Grid: React.FC<Phase3GridProps> = ({ soundEnabled, onFinishAl
           {/* Lado Direito: Sua Malha (Desenho Interativo) */}
           <div className="flex flex-col items-center">
             <div
-              className={`w-full max-w-[300px] sm:max-w-[350px] md:max-w-[360px] aspect-square rounded-2xl border-2 p-1.5 sm:p-2 transition-colors ${
+              className={`w-full max-w-[min(90vw,42dvh)] sm:max-w-[min(82vw,44dvh)] md:max-w-[min(42vw,58dvh)] aspect-square rounded-2xl border-2 p-1.5 sm:p-2 transition-colors ${
                 isLevelComplete
                   ? 'bg-emerald-50/60 border-emerald-400'
                   : 'bg-white border-blue-200 shadow-inner'
